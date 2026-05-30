@@ -1,5 +1,6 @@
-import { useAccount, useBalance } from 'wagmi';
+import { useAccount, useBalance, useReadContract } from 'wagmi';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { VAULT_CONTRACT_ADDRESS, VAULT_ABI } from '../config/contracts';
 
 function shortenAddress(address) {
   if (!address) return 'Not connected';
@@ -10,6 +11,29 @@ export default function Dashboard() {
   const { address, isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
   const { data: balance, isLoading: balanceLoading } = useBalance({ address });
+  const { data: depositData } = useReadContract({
+  address: VAULT_CONTRACT_ADDRESS,
+  abi: VAULT_ABI,
+  functionName: 'userDeposits',
+  args: address ? [address] : undefined,
+  query: { enabled: !!address },
+});
+
+const { data: pointsData } = useReadContract({
+  address: VAULT_CONTRACT_ADDRESS,
+  abi: VAULT_ABI,
+  functionName: 'userPoints',
+  args: address ? [address] : undefined,
+  query: { enabled: !!address },
+});
+
+const { data: rankData } = useReadContract({
+  address: VAULT_CONTRACT_ADDRESS,
+  abi: VAULT_ABI,
+  functionName: 'getUserRank',
+  args: address ? [address] : undefined,
+  query: { enabled: !!address },
+});
 
   const walletBalance = isConnected
     ? balanceLoading
@@ -54,8 +78,9 @@ export default function Dashboard() {
           />
           <div className="dash-card-info">
             <span className="dash-card-label">Your Deposit</span>
-            <span className="dash-card-value">Contract not linked</span>
-            <span className="dash-card-sub">Next step: vault ABI</span>
+            <span className="dash-card-value">
+              {depositData ? depositData.toString() : '0'}</span>
+            <span className="dash-card-sub">Live vault deposit</span>
           </div>
         </div>
 
@@ -67,8 +92,9 @@ export default function Dashboard() {
           />
           <div className="dash-card-info">
             <span className="dash-card-label">Yield Points</span>
-            <span className="dash-card-value">Contract not linked</span>
-            <span className="dash-card-sub">Next step: read userPoints</span>
+            <span className="dash-card-value">
+              {pointsData ? pointsData.toString() : '0'}</span>
+            <span className="dash-card-sub">Live user points</span>
           </div>
         </div>
 
@@ -80,8 +106,9 @@ export default function Dashboard() {
           />
           <div className="dash-card-info">
             <span className="dash-card-label">User Rank</span>
-            <span className="dash-card-value">Contract not linked</span>
-            <span className="dash-card-sub">Next step: getUserRank</span>
+            <span className="dash-card-value">
+              {rankData ? `#${rankData}` : '-'} </span>
+            <span className="dash-card-sub">Live ranking</span>
           </div>
         </div>
       </div>
