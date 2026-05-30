@@ -1,6 +1,6 @@
 import { defineChain } from 'viem';
 
-const fallbackChainId = 999999;
+const fallbackChainId = 984;
 const parsedChainId = Number(import.meta.env.VITE_OPN_CHAIN_ID || fallbackChainId);
 
 export const opnChain = defineChain({
@@ -13,16 +13,16 @@ export const opnChain = defineChain({
   },
   rpcUrls: {
     default: {
-      http: [import.meta.env.VITE_OPN_RPC_URL || 'https://PASTE_OPN_RPC_URL_HERE'],
+      http: [import.meta.env.VITE_OPN_RPC_URL || 'https://testnet-rpc.iopn.tech'],
     },
     public: {
-      http: [import.meta.env.VITE_OPN_RPC_URL || 'https://PASTE_OPN_RPC_URL_HERE'],
+      http: [import.meta.env.VITE_OPN_RPC_URL || 'https://testnet-rpc.iopn.tech'],
     },
   },
   blockExplorers: {
     default: {
       name: import.meta.env.VITE_OPN_EXPLORER_NAME || 'OPN Explorer',
-      url: import.meta.env.VITE_OPN_EXPLORER_URL || 'https://PASTE_OPN_EXPLORER_URL_HERE',
+      url: import.meta.env.VITE_OPN_EXPLORER_URL || 'https://testnet.iopn.tech',
     },
   },
 });
