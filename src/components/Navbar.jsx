@@ -20,19 +20,32 @@ export default function Navbar() {
         <span className="navbar-tagline">Yield Vault on OPN Chain</span>
       </div>
       <div className="navbar-links">
-        <div className="nav-item nav-item-active">
+        <a href="#home" className="nav-item nav-item-active">
           <span>Home</span>
           <img
             src="https://static.codia.ai/s/image_c6a5f659-6563-4352-bd2e-84096a8422a0.png"
             alt=""
-            className="nav-underline"
+          className="nav-underline"
           />
-        </div>
-        <div className="nav-item">App</div>
-        <div className="nav-item">Leaderboard</div>
-        <div className="nav-item">Contract</div>
-        <div className="nav-item">Roadmap</div>
-        <div className="nav-item">Docs</div>
+        </a>
+
+        <a href="#dashboard" className="nav-item">App</a>
+
+        <a href="#leaderboard" className="nav-item">
+          Leaderboard
+        </a>
+
+        <a href="#contract" className="nav-item">
+          Contract
+        </a>
+
+        <a href="#roadmap" className="nav-item">
+          Roadmap
+        </a>
+
+        <a href="#docs" className="nav-item">
+          Docs
+        </a>
       </div>
       <div className="navbar-right">
         <NetworkButton />
