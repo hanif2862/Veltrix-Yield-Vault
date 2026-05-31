@@ -5,7 +5,7 @@ export default function Hero() {
   const { isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
   return (
-    <section className="hero">
+    <section id="home" className="hero">
       <div className="hero-content">
         <div className="hero-badge">
           <img
