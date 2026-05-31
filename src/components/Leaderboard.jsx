@@ -27,7 +27,7 @@ const rows = [
 
 export default function Leaderboard() {
   return (
-    <section className="leaderboard">
+    <section id="leaderboard" className="leaderboard">
       <div className="leaderboard-header">
         <div className="leaderboard-title-row">
           <img
