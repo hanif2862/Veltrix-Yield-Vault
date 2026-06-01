@@ -66,9 +66,9 @@ const { data: rankData } = useReadContract({
           />
         </div>
          {copied && (
-          <div className="copy-success">
+          <span className="copy-success">
             ✓ copied
-          </div>
+          </span>
           )}
         </div>
 
