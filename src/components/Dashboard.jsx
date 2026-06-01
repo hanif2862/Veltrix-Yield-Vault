@@ -12,7 +12,17 @@ export default function Dashboard() {
   const [copied, setCopied] = useState(false);
   const { address, isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
-  const { data: balance, isLoading: balanceLoading } = useBalance({ address });
+  const {
+    data: balance,
+    isLoading: balanceLoading,
+    isError: balanceError,
+  } = useBalance({
+    address,
+    chainId: 984,
+    query: {
+      enabled: !!address,
+    },
+  });
   const { data: depositData } = useReadContract({
   address: VAULT_CONTRACT_ADDRESS,
   abi: VAULT_ABI,
@@ -38,10 +48,14 @@ const { data: rankData } = useReadContract({
 });
 
   const walletBalance = isConnected
-    ? balanceLoading
-      ? 'Loading...'
-      : `${Number(balance?.formatted || 0).toLocaleString(undefined, { maximumFractionDigits: 4 })} ${balance?.symbol || 'OPN'}`
-    : 'Connect wallet';
+      ? balanceLoading
+        ? 'Loading...'
+        : balanceError
+          ? 'Balance unavailable'
+          : `${Number(balance?.formatted || 0).toLocaleString(undefined, {
+              maximumFractionDigits: 4,
+            })} ${balance?.symbol || 'IOPN'}`
+      : 'Connect wallet';
 
   return (
     <section className="dashboard" id="dashboard">
