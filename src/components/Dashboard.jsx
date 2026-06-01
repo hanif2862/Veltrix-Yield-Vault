@@ -50,26 +50,27 @@ const { data: rankData } = useReadContract({
         <div className="wallet-badge">
           <span>{shortenAddress(address)}</span>
           <img
-            src="https://static.codia.ai/s/image_1b8d1dc5-44ff-4d00-8011-b121cb8bb246.png"
+            src={
+              copied
+                ? "https://api.iconify.design/mdi:check.svg?color=%2322c55e"
+                : "https://static.codia.ai/s/image_1b8d1dc5-44ff-4d00-8011-b121cb8bb246.png"
+            }
             alt="copy"
             className="copy-icon"
+            title={copied ? "Copied!" : "Copy wallet address"}
             onClick={() => {
               if (!address) return;
-            
-              navigator.clipboard.writeText(address);
+        
+              navigator.clipboard?.writeText(address);
+        
               setCopied(true);
-            
+        
               setTimeout(() => {
                 setCopied(false);
               }, 2000);
             }}
           />
         </div>
-         {copied && (
-          <span className="copy-success">
-            ✓ copied
-          </span>
-          )}
         </div>
 
       <div className="dashboard-cards">
