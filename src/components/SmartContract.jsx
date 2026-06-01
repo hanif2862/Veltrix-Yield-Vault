@@ -15,14 +15,23 @@ export default function SmartContract() {
       </div>
       <div className="sc-row">
         <span className="sc-key">Contract Address</span>
-        <span className="sc-val sc-addr">
-          0x5F1832becb95F7af39d5Dc6D5945f2D4de44FE8c
-          <img
-            src="https://static.codia.ai/s/image_1b8d1dc5-44ff-4d00-8011-b121cb8bb246.png"
-            alt="copy"
-            className="copy-icon-sm"
-          />
-        </span>
+
+        <span className="sc-val sc-addr"
+          title="0x5F1832becb95F7af39d5Dc6D5945f2D4de44FE8c"
+        >
+          0x5F18...FE8c
+
+        <img
+          src="https://static.codia.ai/s/image_1b8d1dc5-44ff-4d00-8011-b121cb8bb246.png"
+          alt="copy"
+          className="copy-icon-sm"
+          onClick={() =>
+            navigator.clipboard.writeText(
+              '0x5F1832becb95F7af39d5Dc6D5945f2D4de44FE8c'
+            )
+          }
+        />
+      </span>
       </div>
       <div className="sc-row">
         <span className="sc-key">Verified</span>
