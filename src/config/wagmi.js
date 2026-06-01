@@ -8,7 +8,7 @@ import {
 } from '@rainbow-me/rainbowkit/wallets';
 import { opnChain, supportedChains } from './chains';
 
-const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || 'PASTE_WALLETCONNECT_PROJECT_ID_HERE';
+const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || '79a72197dfbf56c02ec5cf081de1e039';
 
 const connectors = connectorsForWallets(
   [
@@ -27,7 +27,7 @@ export const wagmiConfig = createConfig({
   chains: supportedChains,
   connectors,
   transports: {
-    [opnChain.id]: http(import.meta.env.VITE_OPN_RPC_URL || 'https://PASTE_OPN_RPC_URL_HERE'),
+    [opnChain.id]: http(import.meta.env.VITE_OPN_RPC_URL || 'https://testnet-rpc.iopn.tech'),
   },
 });
 
