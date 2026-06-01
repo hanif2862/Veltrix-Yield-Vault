@@ -12,7 +12,16 @@ export default function Dashboard() {
   const [copied, setCopied] = useState(false);
   const { address, isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
-  const { data: balance, isLoading: balanceLoading } = useBalance({ address });
+  const {
+    data: balance,
+    isLoading: balanceLoading,
+    isError: balanceError,
+  } = useBalance({
+    address,
+    query: {
+    enabled: isConnected && !!address,
+  },
+});
   const { data: depositData } = useReadContract({
   address: VAULT_CONTRACT_ADDRESS,
   abi: VAULT_ABI,
