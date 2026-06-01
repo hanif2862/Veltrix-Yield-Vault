@@ -41,7 +41,7 @@ export default function SmartContract() {
       </span>
       {copied && (
       <div className="copy-success">
-        ✓ Contract address copied
+        ✓ copied
       </div>
       )}
       </div>
