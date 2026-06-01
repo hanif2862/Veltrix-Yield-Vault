@@ -36,7 +36,7 @@ export default function Navbar() {
         </a>
 
         <a href="#contract" className="nav-item">
-          Contract
+          Smart Contract
         </a>
 
         <a href="#roadmap" className="nav-item">
