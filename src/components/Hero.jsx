@@ -40,7 +40,14 @@ export default function Hero() {
             />
             {isConnected ? 'Open Dashboard' : 'Connect Wallet'}
           </button>
-          <button className="btn-contract">
+          <button className="btn-contract"
+            onClick={() =>
+            window.open(
+              'https://testnet.iopn.tech/address/0x5F1832becb95F7af39d5Dc6D5945f2D4de44FE8c',
+              '_blank'
+            )
+          }
+          >
             <img
               src="https://static.codia.ai/s/image_cefb0a79-9146-4cd6-855d-9ec240b29a7a.png"
               alt="doc"
