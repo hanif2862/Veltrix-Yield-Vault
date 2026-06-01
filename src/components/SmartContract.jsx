@@ -1,4 +1,6 @@
+import { useState } from 'react';
 export default function SmartContract() {
+  const [copied, setCopied] = useState(false);
   return (
     <section id="contract" className="smart-contract">
       <div className="sc-header">
@@ -25,13 +27,23 @@ export default function SmartContract() {
           src="https://static.codia.ai/s/image_1b8d1dc5-44ff-4d00-8011-b121cb8bb246.png"
           alt="copy"
           className="copy-icon-sm"
-          onClick={() =>
+          onClick={() => {
             navigator.clipboard.writeText(
               '0x5F1832becb95F7af39d5Dc6D5945f2D4de44FE8c'
-            )
-          }
+            );
+              setCopied(true);
+            
+              setTimeout(() => {
+                setCopied(false);
+              }, 2000);
+            }}
         />
       </span>
+      {copied && (
+      <div className="copy-success">
+        ✓ Contract address copied
+      </div>
+      )}
       </div>
       <div className="sc-row">
         <span className="sc-key">Verified</span>
