@@ -21,14 +21,14 @@ export default function Footer() {
             className="footer-icon"
         />
       </a>
-        <img src="https://api.iconify.design/prime:twitter.svg" alt="twitter" className="footer-icon" />
+        <img src="https://api.iconify.design/prime:twitter.svg?color=white" alt="twitter" className="footer-icon" />
         <img src="https://static.codia.ai/s/image_041b40e2-d741-432e-8a35-0f6c1db2862c.png" alt="discord" className="footer-icon" />
       <a href="https://t.me/fatthurrrr"
           target="_blank"
           rel="noreferrer"
         >
         <img
-            src="https://api.iconify.design/ic:sharp-telegram.svg"
+            src="https://api.iconify.design/ic:sharp-telegram.svg?color=white"
             alt="telegram"
             className="footer-icon"
          />
