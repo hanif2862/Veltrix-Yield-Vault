@@ -16,13 +16,13 @@ export default function Footer() {
             rel="noreferrer"
         >
         <img
-            src="https://static.codia.ai/s/image_758cf4e0-879b-451c-8c41-dcce61d89e90.png"
+            src="https://api.iconify.design/simple-icons:github.svg?color=white"
             alt="github"
             className="footer-icon"
         />
       </a>
         <img src="https://api.iconify.design/prime:twitter.svg?color=white" alt="twitter" className="footer-icon" />
-        <img src="https://static.codia.ai/s/image_041b40e2-d741-432e-8a35-0f6c1db2862c.png" alt="discord" className="footer-icon" />
+        <img src="https://api.iconify.design/simple-icons:discord.svg?color=white" alt="discord" className="footer-icon" />
       <a href="https://t.me/fatthurrrr"
           target="_blank"
           rel="noreferrer"
