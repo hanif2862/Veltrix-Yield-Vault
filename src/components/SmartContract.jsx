@@ -60,9 +60,9 @@ export default function SmartContract() {
       </div>
       <div className="sc-divider" />
       <span className="sc-fn-label">Main Functions</span>
-      <div className="sc-fn">deposit()</div>
-      <div className="sc-fn">withdraw(uint256 amount)</div>
-      <div className="sc-fn">getUserRank(address)</div>
+      <div className="sc-fn">deposit() · Deposit IOPN</div>
+      <div className="sc-fn">withdraw() · Withdraw funds</div>
+      <div className="sc-fn">getUserRank() · User ranking</div>
     </section>
   );
 }
