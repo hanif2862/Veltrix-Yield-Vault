@@ -43,7 +43,11 @@ export default function Navbar() {
           Roadmap
         </a>
 
-        <a href="#docs" className="nav-item">
+        <a href="https://github.com/hanif2862/Veltrix-Yield-Vault#readme"
+            target="_blank"
+            rel="noreferrer"
+            className="nav-item"
+        >
           Docs
         </a>
       </div>
