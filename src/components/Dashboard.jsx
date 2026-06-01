@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useAccount, useBalance, useReadContract } from 'wagmi';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { VAULT_CONTRACT_ADDRESS, VAULT_ABI } from '../config/contracts';
@@ -8,6 +9,7 @@ function shortenAddress(address) {
 }
 
 export default function Dashboard() {
+  const [copied, setCopied] = useState(false);
   const { address, isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
   const { data: balance, isLoading: balanceLoading } = useBalance({ address });
@@ -51,10 +53,24 @@ const { data: rankData } = useReadContract({
             src="https://static.codia.ai/s/image_1b8d1dc5-44ff-4d00-8011-b121cb8bb246.png"
             alt="copy"
             className="copy-icon"
-            onClick={() => address && navigator.clipboard?.writeText(address)}
+            onClick={() => {
+              if (!address) return;
+            
+              navigator.clipboard.writeText(address);
+              setCopied(true);
+            
+              setTimeout(() => {
+                setCopied(false);
+              }, 2000);
+            }}
           />
         </div>
-      </div>
+         {copied && (
+          <div className="copy-success">
+            ✓ copied
+          </div>
+          )}
+        </div>
 
       <div className="dashboard-cards">
         <div className="dash-card">
