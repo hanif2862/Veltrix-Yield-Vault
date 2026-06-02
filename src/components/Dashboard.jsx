@@ -31,7 +31,7 @@ export default function Dashboard() {
     data: balance,
     isLoading: balanceLoading,
     isError: balanceError,
-  } = useBalance({
+    refetch: refetchBalance,} = useBalance({
     address,
     query: {
     enabled: isConnected && !!address,
@@ -85,11 +85,12 @@ const handleWithdraw = () => {
 
 useEffect(() => {
   if (isConfirmed) {
+    refetchBalance?.();
     refetchDeposit?.();
     refetchPoints?.();
     refetchRank?.();
   }
-}, [isConfirmed, refetchDeposit, refetchPoints, refetchRank]);
+}, [isConfirmed, refetchBalance, refetchDeposit, refetchPoints, refetchRank]);
 
   const walletBalance = isConnected
       ? balanceLoading
