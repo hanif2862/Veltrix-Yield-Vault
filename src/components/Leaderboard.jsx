@@ -60,7 +60,6 @@ export default function Leaderboard() {
           maximumFractionDigits: 4,
         })} IOPN`,
         points: Number(row.points).toLocaleString(),
-        lastActivity: 'On-chain',
       })) || [];
 
   return (
@@ -91,7 +90,6 @@ export default function Leaderboard() {
           <span>Address</span>
           <span>Total Deposit</span>
           <span>Points</span>
-          <span>Last Activity</span>
         </div>
 
         {rows.length > 0 ? (
@@ -101,7 +99,6 @@ export default function Leaderboard() {
               <span>{shortenAddress(row.address)}</span>
               <span>{row.deposit}</span>
               <span>{row.points}</span>
-              <span>{row.lastActivity}</span>
             </div>
           ))
         ) : (
@@ -110,7 +107,6 @@ export default function Leaderboard() {
             <span>No users yet</span>
             <span>0 IOPN</span>
             <span>0</span>
-            <span>-</span>
           </div>
         )}
       </div>
