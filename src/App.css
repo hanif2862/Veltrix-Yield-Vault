@@ -930,3 +930,108 @@ input {
     font-size: 12px;
   }
 }
+
+/* Roadmap */
+
+.roadmap {
+  margin-top: 20px;
+
+  background: #030c25;
+  border: 1px solid #141c3a;
+  border-radius: 12px;
+
+  padding: 24px;
+}
+
+.roadmap-header {
+  margin-bottom: 20px;
+}
+
+.roadmap-subtitle {
+  margin-top: 8px;
+
+  color: #8d94a8;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.roadmap-card {
+  background: #0b142e;
+
+  border: 1px solid #1c2b4d;
+  border-radius: 10px;
+
+  padding: 18px;
+}
+
+.roadmap-status {
+  display: inline-block;
+
+  padding: 4px 10px;
+
+  border-radius: 999px;
+
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+
+  color: #b39cff;
+  font-size: 11px;
+  font-weight: 700;
+
+  margin-bottom: 12px;
+}
+
+.roadmap-card h3 {
+  margin: 0 0 14px;
+
+  color: #fff;
+  font-size: 18px;
+}
+
+.roadmap-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.roadmap-card li {
+  color: #a7aec2;
+  font-size: 14px;
+  line-height: 1.7;
+
+  margin-bottom: 8px;
+}
+
+/* Tablet */
+
+@media (max-width: 1024px) {
+  .roadmap-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 640px) {
+  .roadmap {
+    padding: 16px;
+  }
+
+  .roadmap-card {
+    padding: 14px;
+  }
+
+  .roadmap-card h3 {
+    font-size: 16px;
+  }
+
+  .roadmap-card li {
+    font-size: 13px;
+  }
+}
