@@ -1,31 +1,68 @@
-const rows = [
-  {
-    rank: 1,
-    rankIcon: "https://static.codia.ai/s/image_1f5a983b-246d-4c71-80c0-21ddfa4e639a.png",
-    address: "0x12...ab45",
-    deposit: "500 OPN",
-    points: "5,240",
-    activity: "2 mins ago",
-  },
-  {
-    rank: 2,
-    rankIcon: "https://static.codia.ai/s/image_6eadcb6d-d895-4bbb-8bc3-b73d9d4f9e7d.png",
-    address: "0x89...cd21",
-    deposit: "420 OPN",
-    points: "4,800",
-    activity: "5 mins ago",
-  },
-  {
-    rank: 3,
-    rankIcon: "https://static.codia.ai/s/image_6cc4aead-787d-4622-acbc-683ead6b1259.png",
-    address: "0x77...ef90",
-    deposit: "300 OPN",
-    points: "3,600",
-    activity: "10 mins ago",
-  },
-];
+import { useState } from 'react';
+import { useReadContracts } from 'wagmi';
+import { formatEther } from 'viem';
+import { VAULT_CONTRACT_ADDRESS, VAULT_ABI } from '../config/contracts';
+
+function shortenAddress(address) {
+  if (!address) return '-';
+  return `${address.slice(0, 6)}...${address.slice(-4)}`;
+}
 
 export default function Leaderboard() {
+  const [showAll, setShowAll] = useState(false);
+
+  const { data: usersCountData } = useReadContracts({
+    contracts: [
+      {
+        address: VAULT_CONTRACT_ADDRESS,
+        abi: VAULT_ABI,
+        functionName: 'getUsersCount',
+      },
+    ],
+  });
+
+  const usersCount = Number(usersCountData?.[0]?.result || 0);
+  const fetchLimit = Math.min(usersCount, showAll ? 20 : 5);
+
+  const leaderboardCalls = Array.from({ length: fetchLimit }, (_, index) => ({
+    address: VAULT_CONTRACT_ADDRESS,
+    abi: VAULT_ABI,
+    functionName: 'leaderboard',
+    args: [BigInt(index)],
+  }));
+
+  const { data: leaderboardData } = useReadContracts({
+    contracts: leaderboardCalls,
+    query: {
+      enabled: fetchLimit > 0,
+    },
+  });
+
+  const rows =
+    leaderboardData
+      ?.map((item) => {
+        if (!item?.result) return null;
+
+        const [user, depositAmount, points] = item.result;
+
+        return {
+          address: user,
+          depositAmount,
+          points,
+        };
+      })
+      .filter(Boolean)
+      .sort((a, b) => Number(b.points - a.points))
+      .map((row, index) => ({
+        rank: index + 1,
+        address: row.address,
+        deposit: `${Number(formatEther(row.depositAmount)).toLocaleString(undefined, {
+          maximumFractionDigits: 4,
+        })} IOPN`,
+        points: Number(row.points).toLocaleString(),
+        lastActivity: 'On-chain',
+      })) || [];
+
   return (
     <section id="leaderboard" className="leaderboard">
       <div className="leaderboard-header">
@@ -37,8 +74,17 @@ export default function Leaderboard() {
           />
           <span className="section-title">Leaderboard</span>
         </div>
-        <button className="view-all-btn">View All</button>
+
+        <button
+          className="view-all-btn"
+          type="button"
+          onClick={() => setShowAll(!showAll)}
+          disabled={usersCount <= 5}
+        >
+          {showAll ? 'Show Less' : 'View Top 20'}
+        </button>
       </div>
+
       <div className="lb-table">
         <div className="lb-thead">
           <span>Rank</span>
@@ -47,17 +93,26 @@ export default function Leaderboard() {
           <span>Points</span>
           <span>Last Activity</span>
         </div>
-        {rows.map((r) => (
-          <div key={r.rank} className="lb-row">
-            <span className="lb-rank">
-              <img src={r.rankIcon} alt={`rank ${r.rank}`} className="rank-icon" />
-            </span>
-            <span className="lb-addr">{r.address}</span>
-            <span className="lb-deposit">{r.deposit}</span>
-            <span className="lb-points">{r.points}</span>
-            <span className="lb-activity">{r.activity}</span>
+
+        {rows.length > 0 ? (
+          rows.map((row) => (
+            <div key={row.address} className="lb-row">
+              <span>#{row.rank}</span>
+              <span>{shortenAddress(row.address)}</span>
+              <span>{row.deposit}</span>
+              <span>{row.points}</span>
+              <span>{row.lastActivity}</span>
+            </div>
+          ))
+        ) : (
+          <div className="lb-row">
+            <span>-</span>
+            <span>No users yet</span>
+            <span>0 IOPN</span>
+            <span>0</span>
+            <span>-</span>
           </div>
-        ))}
+        )}
       </div>
     </section>
   );
