@@ -48,7 +48,7 @@ export default function Dashboard() {
 const { data: pointsData, refetch: refetchPoints } = useReadContract({
   address: VAULT_CONTRACT_ADDRESS,
   abi: VAULT_ABI,
-  functionName: 'userPoints',
+  functionName: 'getLiveUserPoints',
   args: address ? [address] : undefined,
   query: { enabled: !!address },
 });
@@ -243,14 +243,6 @@ useEffect(() => {
               className="action-icon"
             />
             {isWriting || isConfirming ? 'Processing...' : 'Withdraw'}
-          </button>
-          <button className="btn-claim" type="button" disabled>
-            <img
-              src="https://static.codia.ai/s/image_1b8d1dc5-44ff-4d00-8011-b121cb8bb246.png"
-              alt="claim"
-              className="action-icon"
-            />
-            Claim Soon
           </button>
         </div>
       </div>
