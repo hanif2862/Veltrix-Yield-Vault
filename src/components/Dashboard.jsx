@@ -11,6 +11,7 @@ function shortenAddress(address) {
 
 export default function Dashboard() {
   const [copied, setCopied] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const [amount, setAmount] = useState('0.001');
 
   const {
@@ -89,8 +90,12 @@ useEffect(() => {
     refetchDeposit?.();
     refetchPoints?.();
     refetchRank?.();
+    setShowToast(true);
+    setTimeout(() => {
+      setShowToast(false);
+    }, 5000);
   }
-}, [isConfirmed, refetchBalance, refetchDeposit, refetchPoints, refetchRank]);
+}, [ isConfirmed, refetchBalance, refetchDeposit, refetchPoints, refetchRank, ]);
 
   const walletBalance = isConnected
       ? balanceLoading
@@ -244,24 +249,21 @@ useEffect(() => {
             />
             {isWriting || isConfirming ? 'Processing...' : 'Withdraw'}
           </button>
-          {isConfirming && (
-          <span className="tx-status">
-            Transaction confirming...
-          </span>
-        )}
-        
-        {isConfirmed && txHash && (
+        </div>
+      </div>
+      {showToast && txHash && (
+        <div className="tx-toast">
+          <div>✅ Transaction Confirmed</div>
+      
           <a
             href={`https://testnet.iopn.tech/tx/${txHash}`}
             target="_blank"
             rel="noreferrer"
-            className="tx-link"
           >
-            ✓ View Transaction
+            View on Explorer ✓
           </a>
-        )}
         </div>
-      </div>
+      )}
     </section>
   );
 }
