@@ -5,6 +5,7 @@ import StatsBar from './components/StatsBar';
 import Dashboard from './components/Dashboard';
 import Leaderboard from './components/Leaderboard';
 import HowItWorks from './components/HowItWorks';
+import Roadmap from './components/Roadmap';
 import SmartContract from './components/SmartContract';
 import Footer from './components/Footer';
 
@@ -25,6 +26,7 @@ export default function App() {
                 <Leaderboard />
                 <HowItWorks />
               </div>
+              <Roadmap />
             </div>
             <SmartContract />
           </div>
