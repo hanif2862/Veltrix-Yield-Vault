@@ -16,9 +16,9 @@ export default function Hero() {
           <span>Built on OPN Chain</span>
         </div>
         <h1 className="hero-title">VELTRIX</h1>
-        <h2 className="hero-subtitle">Yield Vault. Earn More. On-Chain.</h2>
+        <h2 className="hero-subtitle">Build Your On-Chain Reputation.</h2>
         <p className="hero-desc">
-          Deposit OPN, earn yield points, and compete on the leaderboard.<br />
+          Deposit OPN, earn points, and climb the leaderboard.<br />
           100% permissionless and transparent.
         </p>
         <div className="hero-actions">
@@ -43,7 +43,7 @@ export default function Hero() {
           <button className="btn-contract"
             onClick={() =>
             window.open(
-              'https://testnet.iopn.tech/address/0x5F1832becb95F7af39d5Dc6D5945f2D4de44FE8c',
+              'https://testnet.iopn.tech/address/0xda165D783c1E9548D6Ba896192D7AA6b63D0437C',
               '_blank'
             )
           }
