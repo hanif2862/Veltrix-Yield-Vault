@@ -819,7 +819,7 @@ input {
 .tx-toast {
   position: fixed;
 
-  top: 20px;
+  bottom: 20px;
   right: 20px;
 
   z-index: 9999;
@@ -874,7 +874,7 @@ input {
 /* Tablet */
 @media (max-width: 1024px) {
   .tx-toast {
-    top: 16px;
+    bottom: 16px;
     right: 16px;
     max-width: 300px;
   }
@@ -883,7 +883,7 @@ input {
 /* Mobile */
 @media (max-width: 640px) {
   .tx-toast {
-    top: 12px;
+    bottom: 12px;
     left: 12px;
     right: 12px;
 
