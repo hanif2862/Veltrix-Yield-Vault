@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { useAccount, useBalance, useReadContract } from 'wagmi';
+import { useEffect, useState } from 'react';
+import { useAccount, useBalance, useReadContract, useWriteContract, useWaitForTransactionReceipt,} from 'wagmi';
+import { parseEther, formatEther } from 'viem';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { VAULT_CONTRACT_ADDRESS, VAULT_ABI } from '../config/contracts';
 
@@ -10,6 +11,20 @@ function shortenAddress(address) {
 
 export default function Dashboard() {
   const [copied, setCopied] = useState(false);
+  const [amount, setAmount] = useState('0.001');
+
+  const {
+    writeContract,
+    data: txHash,
+    isPending: isWriting,
+  } = useWriteContract();
+  
+  const {
+    isLoading: isConfirming,
+    isSuccess: isConfirmed,
+  } = useWaitForTransactionReceipt({
+    hash: txHash,
+  });
   const { address, isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
   const {
@@ -22,7 +37,7 @@ export default function Dashboard() {
     enabled: isConnected && !!address,
   },
 });
-  const { data: depositData } = useReadContract({
+  const { data: depositData, refetch: refetchDeposit } = useReadContract({
   address: VAULT_CONTRACT_ADDRESS,
   abi: VAULT_ABI,
   functionName: 'userDeposits',
@@ -30,7 +45,7 @@ export default function Dashboard() {
   query: { enabled: !!address },
 });
 
-const { data: pointsData } = useReadContract({
+const { data: pointsData, refetch: refetchPoints } = useReadContract({
   address: VAULT_CONTRACT_ADDRESS,
   abi: VAULT_ABI,
   functionName: 'userPoints',
@@ -38,13 +53,43 @@ const { data: pointsData } = useReadContract({
   query: { enabled: !!address },
 });
 
-const { data: rankData } = useReadContract({
+const { data: rankData, refetch: refetchRank } = useReadContract({
   address: VAULT_CONTRACT_ADDRESS,
   abi: VAULT_ABI,
   functionName: 'getUserRank',
   args: address ? [address] : undefined,
   query: { enabled: !!address },
 });
+
+  const handleDeposit = () => {
+  if (!isConnected || !amount || Number(amount) <= 0) return;
+
+  writeContract({
+    address: VAULT_CONTRACT_ADDRESS,
+    abi: VAULT_ABI,
+    functionName: 'deposit',
+    value: parseEther(amount),
+  });
+};
+
+const handleWithdraw = () => {
+  if (!isConnected || !amount || Number(amount) <= 0) return;
+
+  writeContract({
+    address: VAULT_CONTRACT_ADDRESS,
+    abi: VAULT_ABI,
+    functionName: 'withdraw',
+    args: [parseEther(amount)],
+  });
+};
+
+useEffect(() => {
+  if (isConfirmed) {
+    refetchDeposit?.();
+    refetchPoints?.();
+    refetchRank?.();
+  }
+}, [isConfirmed, refetchDeposit, refetchPoints, refetchRank]);
 
   const walletBalance = isConnected
       ? balanceLoading
@@ -109,7 +154,9 @@ const { data: rankData } = useReadContract({
           <div className="dash-card-info">
             <span className="dash-card-label">Your Deposit</span>
             <span className="dash-card-value">
-              {depositData ? depositData.toString() : '0'}</span>
+              {depositData ? `${Number(formatEther(depositData)).toLocaleString(undefined, {
+                maximumFractionDigits: 4,
+              })} IOPN` : '0 IOPN'}</span>
             <span className="dash-card-sub">Live vault deposit</span>
           </div>
         </div>
@@ -148,26 +195,53 @@ const { data: rankData } = useReadContract({
           <div className="amount-input-wrap">
             <span className="amount-label">Amount (OPN)</span>
             <div className="amount-input-box">
-              <input type="text" defaultValue="10" className="amount-input" disabled={!isConnected} />
-              <button className="max-btn" type="button" disabled={!isConnected}>MAX</button>
+              <input
+                type="text"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="amount-input"
+                disabled={!isConnected || isWriting || isConfirming}
+              />
+              <button
+                className="max-btn"
+                type="button"
+                disabled={!isConnected}
+                onClick={() => setAmount(balance?.formatted || '0')}
+              >
+                MAX
+              </button>
             </div>
             <span className="balance-note">Balance: {walletBalance}</span>
           </div>
-          <button className="btn-deposit" type="button" onClick={!isConnected ? openConnectModal : undefined} disabled={!isConnected}>
+          <button
+            className="btn-deposit"
+            type="button"
+            onClick={!isConnected ? openConnectModal : handleDeposit}
+            disabled={!isConnected || isWriting || isConfirming}
+          >
             <img
               src="https://static.codia.ai/s/image_1b8d1dc5-44ff-4d00-8011-b121cb8bb246.png"
               alt="deposit"
               className="action-icon"
             />
-            {isConnected ? 'Deposit Soon' : 'Connect First'}
+            {!isConnected
+              ? 'Connect First'
+              : isWriting || isConfirming
+                ? 'Depositing...'
+                : 'Deposit'}
           </button>
-          <button className="btn-withdraw" type="button" disabled>
+          <button
+            className="btn-withdraw"
+            type="button"
+            onClick={handleWithdraw}
+            disabled={!isConnected || isWriting || isConfirming}
+          >
             <img
               src="https://static.codia.ai/s/image_1b8d1dc5-44ff-4d00-8011-b121cb8bb246.png"
               alt="withdraw"
               className="action-icon"
             />
-            Withdraw Soon
+            {isWriting || isConfirming ? 'Processing...' : 'Withdraw'}
           </button>
           <button className="btn-claim" type="button" disabled>
             <img
