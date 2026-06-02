@@ -20,16 +20,19 @@ export default function App() {
           <Hero />
           <StatsBar />
           <div className="main-grid">
-            <div className="main-left">
-              <Dashboard />
-              <div className="bottom-row">
-                <Leaderboard />
-                <HowItWorks />
-              </div>
-              <Roadmap />
+          <div className="main-left">
+            <Dashboard />
+        
+            <div className="bottom-row">
+              <Leaderboard />
+              <HowItWorks />
             </div>
-            <SmartContract />
           </div>
+        
+          <SmartContract />
+        </div>
+        
+        <Roadmap />
         </div>
       </main>
       <Footer />
