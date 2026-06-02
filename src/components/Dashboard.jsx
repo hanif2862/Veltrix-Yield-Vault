@@ -171,7 +171,7 @@ useEffect(() => {
           <div className="dash-card-info">
             <span className="dash-card-label">Yield Points</span>
             <span className="dash-card-value">
-              {pointsData ? pointsData.toString() : '0'}</span>
+              {pointsData ? Number(pointsData).toLocaleString() : '0'}</span>
             <span className="dash-card-sub">Live user points</span>
           </div>
         </div>
@@ -244,6 +244,22 @@ useEffect(() => {
             />
             {isWriting || isConfirming ? 'Processing...' : 'Withdraw'}
           </button>
+          {isConfirming && (
+          <span className="tx-status">
+            Transaction confirming...
+          </span>
+        )}
+        
+        {isConfirmed && txHash && (
+          <a
+            href={`https://testnet.iopn.tech/tx/${txHash}`}
+            target="_blank"
+            rel="noreferrer"
+            className="tx-link"
+          >
+            ✓ View Transaction
+          </a>
+        )}
         </div>
       </div>
     </section>
