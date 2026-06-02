@@ -19,9 +19,9 @@ export default function SmartContract() {
         <span className="sc-key">Contract Address</span>
 
         <span className="sc-val sc-addr"
-          title="0x5F1832becb95F7af39d5Dc6D5945f2D4de44FE8c"
+          title="0xda165D783c1E9548D6Ba896192D7AA6b63D0437C"
         >
-          0x5F18...FE8c
+          0xda16...437C
 
         <img
           src="https://static.codia.ai/s/image_1b8d1dc5-44ff-4d00-8011-b121cb8bb246.png"
