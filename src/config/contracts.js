@@ -1,6 +1,6 @@
 import { opnChain } from './chains';
 
-export const VAULT_CONTRACT_ADDRESS = import.meta.env.VITE_VAULT_CONTRACT_ADDRESS || '0x5F1832becb95F7af39d5Dc6D5945f2D4de44FE8c';
+export const VAULT_CONTRACT_ADDRESS = import.meta.env.VITE_VAULT_CONTRACT_ADDRESS || '0xda165D783c1E9548D6Ba896192D7AA6b63D0437C';
 
 export const VAULT_CONTRACTS = {
   [opnChain.id]: VAULT_CONTRACT_ADDRESS,
@@ -79,6 +79,25 @@ export const VAULT_ABI = [
         "type": "address"
       }
     ],
+    "name": "getLiveUserPoints",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
     "name": "getUserRank",
     "outputs": [
       {
@@ -125,6 +144,25 @@ export const VAULT_ABI = [
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "lastPointUpdate",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "index",
         "type": "uint256"
@@ -145,6 +183,38 @@ export const VAULT_ABI = [
       {
         "internalType": "uint256",
         "name": "points",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "pendingPoints",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "POINTS_PER_DAY_PER_OPN",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
         "type": "uint256"
       }
     ],
@@ -260,4 +330,4 @@ export const VAULT_ABI = [
     "stateMutability": "view",
     "type": "function"
   }
-];
+]
