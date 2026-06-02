@@ -260,7 +260,7 @@ useEffect(() => {
             target="_blank"
             rel="noreferrer"
           >
-            View on Explorer ✓
+            View on Explorer 🔗
           </a>
         </div>
       )}
