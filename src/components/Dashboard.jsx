@@ -93,7 +93,7 @@ useEffect(() => {
     setShowToast(true);
     setTimeout(() => {
       setShowToast(false);
-    }, 5000);
+    }, 20000);
   }
 }, [ isConfirmed, refetchBalance, refetchDeposit, refetchPoints, refetchRank, ]);
 
